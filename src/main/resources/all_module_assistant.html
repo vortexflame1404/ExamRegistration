@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Online Exam Registration</title>
+    <style>
+        /* The sidebar menu */
+        .sidenav {
+            height: 100%; /* Full-height: remove this if you want "auto" height */
+            width: 160px; /* Set the width of the sidebar */
+            position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+            z-index: 1; /* Stay on top */
+            top: 0; /* Stay at the top */
+            left: 0;
+            background-color: #111; /* Black */
+            overflow-x: hidden; /* Disable horizontal scroll */
+            padding-top: 20px;
+        }
+
+        /* The navigation menu links */
+        .sidenav a {
+            padding: 6px 8px 6px 16px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+        }
+
+        /* When you mouse over the navigation links, change their color */
+        .sidenav a:hover {
+            color: #f1f1f1;
+        }
+
+        /* Style page content */
+        .main {
+            margin-left: 160px; /* Same as the width of the sidebar */
+            padding: 0px 10px;
+        }
+
+        /* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+        @media screen and (max-height: 450px) {
+            .sidenav {
+                padding-top: 15px;
+            }
+
+            .sidenav a {
+                font-size: 18px;
+            }
+        }
+
+        table {
+            border-spacing: 1em .5em;
+            padding: 0 2em 1em 0;
+            border: 1px solid orange;
+        }
+
+        table {
+            border-spacing: 1em .5em;
+            padding: 0 2em 1em 0;
+            border: 1px solid orange;
+        }
+
+
+    </style>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // var semesterId = window.location.pathname.split("/")[3];
+            // var accId = 5;
+            // $("#retrieve-resources").click(function () {
+            $.ajax({
+                type: 'GET',
+                url: '/view/modules', // Using our resources.json file to serve results
+                dataType: 'json',
+                success: loadModule
+            });
+
+
+        });
+
+        function loadModule(result) {
+            var displayResources = $("#display-resources");
+
+            displayResources.text("Please wait...");
+            console.log(result);
+            var output =
+                "<table><thead><tr><th>Module</th><th>Code</th><th>Semester id</th></thead><tbody>";
+                for (var i in result) {
+                    output +=
+                        "<tr><td>" +
+                    result[i].m_name +
+                    " </td><td>" +
+                    result[i].code +
+                    "</td><td>" +
+                    result[i].semester_id +
+                    "</td><td>" +
+                    "<form action='/delete/module/" + result[i].module_id + "/action' method='post'><button type='submit'>Delete</button></form>"  +
+                    "</td><td>" +
+                    "<button onclick='modify_module(" + result[i].module_id + ")'>Modify</button>"
+
+                }
+                output += "</tbody></table>";
+
+            displayResources.html(output);
+            $("table").addClass("table");
+        }
+
+        function modify_module(module_id) {
+            $("#display-form").append(
+                "<form action = '/modify/module/" + module_id + "/action' method = 'post'>"
+                + "Module name:<br>"
+                + "<label><input type='text' name='m_name'></label>"
+                + "<br>Code:<br>"
+                + "<label><input type='text' name='code'></label>"
+                + "<br>Semester id:<br>"
+                + "<label><input type='text' name='semester_id'></label>"
+                + "<br><br>"
+                + "<input type='submit' value='Submit'>"
+                + "</form>"
+            );
+        }
+    </script>
+</head>
+<body>
+<!-- Side navigation -->
+<div class="sidenav">
+    <a href="/add_student.html">Insert Student</a>
+    <a href="/all_module_assistant.html">Module</a>
+    <a href="/all_account.html">Account</a>
+</div>
+
+<!-- Page content -->
+<div class="main">
+    <h1>All Modules</h1>
+    <div id="display-resources"></div>
+    <div id="display-form"></div>
+</div>
+
+</body>
+</html>
