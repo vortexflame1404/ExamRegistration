@@ -17,8 +17,6 @@ public class Register {
                            @PathParam("re_date") String re_date,
                            @PathParam("e_date") String e_date,
                            @PathParam("module_id") String module_id) {
-//        if (password == null)
-//            password = "default";
         Methods.register_exam(re_date, e_date, student_id, exam_id);
         return Response.seeOther(URI.create("/all_modules/view/view_exams/" + module_id)).build();
     }

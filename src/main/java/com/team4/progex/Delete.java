@@ -13,8 +13,6 @@ public class Delete {
     @Path("module/{id}/action")
     @Produces()
     public Response doPost(@PathParam("id") int id) {
-//        if (password == null)
-//            password = "default";
         Methods.cancel_module(id);
         return Response.seeOther(URI.create("all_module_assistant.html")).build();
     }
