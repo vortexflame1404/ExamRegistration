@@ -80,13 +80,13 @@
         });
 
         function loadModule(result) {
-            var displayResources = $("#display-resources");
+            let displayResources = $("#display-resources");
 
             displayResources.text("Please wait...");
             console.log(result);
-            var output =
+            let output =
                 "<table><thead><tr><th>First name</th><th>Last name</th><th>User name</th></thead><tbody>";
-            for (var i in result) {
+            for (let i in result) {
                 output +=
                     "<tr><td>" +
                     result[i].fname +

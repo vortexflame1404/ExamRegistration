@@ -1,6 +1,6 @@
 $(document).ready(function () {
     // var semesterId = window.location.pathname.split("/")[3];
-    var accId = 5;
+    var accId = 11;
     // $("#retrieve-resources").click(function () {
     $.ajax({
         type: 'GET',
